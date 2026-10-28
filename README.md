@@ -1,2 +1,1 @@
-# terraform-multi-env-infrastructure
-Production-Grade Terraform Setup: Modular VPC, EC2/ALB, S3+DynamoDB Remote Backend with Multi-Environment support (Dev, Prod).
+Multi-Environment AWS Infrastructure using Terraform (Dev, QA, Prod): Modular VPC, EC2, RDS, and Remote Backend with S3 & DynamoDB state locking.
