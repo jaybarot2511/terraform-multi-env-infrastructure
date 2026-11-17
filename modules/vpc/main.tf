@@ -62,3 +62,56 @@ resource "aws_route_table_association" "public" {
   count          = length(var.public_subnet_cidrs)
   subnet_id      = aws_subnet.public-subnet[count.index].id
 }
+resource "aws_security_group" "web_sg" {
+  name        = "${var.environment}-web-sg"
+  description = "Allow inbound rule for https and ssh and https"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    description = "Allow SSh"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = var.allowed_cidr_blocks
+  }
+
+  ingress {
+    description = "Allow HTTP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = var.allowed_cidr_blocks
+  }
+
+  ingress {
+    description = "Allow HTTPS"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = var.allowed_cidr_blocks
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = var.allowed_cidr_blocks
+  }
+  tags = {
+    Name        = "${var.environment}-web-sg"
+    Environment = var.environment
+  }
+}
+
+resource "aws_instance" "web_server" {
+  ami                         = var.ami_id
+  instance_type               = var.instance_type
+  subnet_id                   = aws_subnet.public-subnet[0].id
+  vpc_security_group_ids      = [aws_security_group.web_sg.id]
+  associate_public_ip_address = true
+  tags = {
+    Name        = "${var.environment}-web-server"
+    Environment = var.environment
+  }
+
+}
+
