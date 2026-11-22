@@ -55,15 +55,4 @@ terraform plan
 terraform apply
 ## Getting Started
 
-### Step 2: Initialize Root Configuration and Migrate State
-Return to the project root and initialize the root configuration with the remote backend:
-```bash
-cd ..
-terraform init -migrate-state
 
-Bash
-- **Step 1: Provision the S3 State Backend:** Create the S3 bucket for remote state storage (`cd backend-setup` -> `terraform init` -> `terraform plan` -> `terraform apply`).
-- **Step 2: Initialize Root Project & Migrate State:** Return to the root directory and migrate state (`cd ..` -> `terraform init -migrate-state`).
-- **Step 3: Validate, Plan & Apply Infrastructure:** Format, validate, and deploy your target environment (`terraform fmt -recursive` -> `terraform validate` -> `terraform plan -var-file="environments/dev/dev.tfvars"` -> `terraform apply -var-file="environments/dev/dev.tfvars"`).
-- **Step 4: Verify Outputs & State:** Check provisioned resource details and tracked state (`terraform output` -> `terraform state list`).
-- **Step 5: Destroy Resources After Testing:** Clean up all AWS resources after testing to avoid charges (`terraform destroy -var-file="environments/dev/dev.tfvars"`).
