@@ -40,7 +40,7 @@ terraform-multi-env-infrastructure/
 ├── main.tf
 ├── variables.tf
 └── outputs.tf
-
+'''
 ## Getting Started
 
 - **Step 1: Provision the S3 State Backend:** Create the S3 bucket for remote state storage (`cd backend-setup` -> `terraform init` -> `terraform plan` -> `terraform apply`).
