@@ -40,6 +40,7 @@ terraform-multi-env-infrastructure/
 ├── main.tf
 ├── variables.tf
 └── outputs.tf
+'''
 
 # Prerequisites
 Before running this project, make sure you have:
