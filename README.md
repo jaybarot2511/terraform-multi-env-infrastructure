@@ -71,6 +71,7 @@ terraform validate
 terraform plan -var-file="environments/dev/dev.tfvars"
 terraform apply -var-file="environments/dev/dev.tfvars"
 ```
+
 ### Step 4: Verify Outputs and State
 Check the provisioned resource outputs and state entries:
 
