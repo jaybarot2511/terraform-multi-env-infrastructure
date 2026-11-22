@@ -43,9 +43,6 @@ terraform-multi-env-infrastructure/
 
 Prerequisites
 Before running this project, make sure you have:
-
-Terraform installed on your machine.
-
-AWS CLI installed and configured (aws configure) with credentials for your target region (e.g., ap-south-1).
-
-An AWS account with permissions to manage S3, VPC, EC2, and RDS resources.
+1.Terraform installed on your machine.
+2.AWS CLI installed and configured (aws configure) with credentials for your target region (e.g., ap-south-1).
+3.An AWS account with permissions to manage S3, VPC, EC2, and RDS resources.
