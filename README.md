@@ -61,4 +61,13 @@ Return to the project root and initialize the root configuration with the remote
 ```bash
 cd ..
 terraform init -migrate-state
+```
+Step 3: Validate, Plan, and Apply Infrastructure
+Run validation and preview changes for your target environment (example uses dev):
 
+Bash
+terraform fmt -recursive
+terraform validate
+terraform plan -var-file="environments/dev/dev.tfvars"
+terraform apply -var-file="environments/dev/dev.tfvars"
+```
