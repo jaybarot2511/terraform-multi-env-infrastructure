@@ -1,7 +1,10 @@
-output "vpc_id" {
-  value = module.vpc.vpc_id
-}
+output "s3_bucket_name" {
+  value       = aws_s3_bucket.tf_state.bucket
+  description = "Created S3 bucket name"
 
-output "web_server_public_ip" {
-  value = module.ec2.web_server_public_ip
+}
+output "dynamodb_table_name" {
+  value       = aws_dynamodb_table.tf_locks.name
+  description = "Created DynamoDB table name"
+
 }

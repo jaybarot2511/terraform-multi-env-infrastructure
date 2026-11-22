@@ -1,31 +1,68 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source  = "hashicorp/aws"
       version = "~> 5.0"
     }
   }
 }
+
 provider "aws" {
-  region = "ap-south-1"  
+  region = var.aws_region
+
 }
 
-module "vpc" {
-  source = "./modules/vpc"
-  environment = var.enviroment
-  vpc_cidr = var.vpc_cidr
-  public_subnet_id = var.public_subnet_cidrs
-  private_subnet_id = var.private_subnet_cidrs
-  availability_zones = var.availability_zones
+resource "aws_s3_bucket" "tf_state" {
+  bucket = var.bucket_name
+
+
+  lifecycle {
+    prevent_destroy = false
+  }
+
+  tags = {
+    Name      = "Terraform Remote State Bucket"
+    Managedby = "terraform"
+  }
 }
 
+resource "aws_s3_bucket_versioning" "tf_state_versioning" {
+  bucket = aws_s3_bucket.tf_state.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
 
-module "ec2" {
-  source = "./modules/ec2"
-  instance_type = var.instance_type
-  environment = var.enviroment
-  vpc_id = mosules.vpc.vpc_cidr
-  subnet_id = module.vpc.public_subnet_id[0]
-  ami_id = var.ami_id
-  allowed_cidr_blocks = var.allowed_cidr_blocks
+resource "aws_s3_bucket_server_side_encryption_configuration" "tf_state_encryption" {
+  bucket = aws_s3_bucket.tf_state.id
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
+  }
+}
+
+resource "aws_s3_bucket_public_access_block" "tf_state_block_public" {
+  bucket = aws_s3_bucket.tf_state.id
+
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+resource "aws_dynamodb_table" "tf_locks" {
+  name         = var.dynamodb_table_name
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = "LockID"
+
+  attribute {
+    name = "LockID"
+    type = "S"
+  }
+
+  tags = {
+    Name      = "Terraform State Lock Table"
+    ManagedBy = "Terraform"
+  }
 }
