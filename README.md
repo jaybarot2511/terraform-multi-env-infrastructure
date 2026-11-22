@@ -40,3 +40,12 @@ terraform-multi-env-infrastructure/
 ├── main.tf
 ├── variables.tf
 └── outputs.tf
+
+Prerequisites
+Before running this project, make sure you have:
+
+Terraform installed on your machine.
+
+AWS CLI installed and configured (aws configure) with credentials for your target region (e.g., ap-south-1).
+
+An AWS account with permissions to manage S3, VPC, EC2, and RDS resources.
