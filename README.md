@@ -54,4 +54,11 @@ terraform init
 terraform plan
 terraform apply
 
+### Step 2: Initialize Root Configuration and Migrate State
+
+Return to the project root and initialize the root configuration with the remote backend:
+
+```bash
+cd ..
+terraform init -migrate-state
 
