@@ -53,6 +53,5 @@ cd backend-setup
 terraform init
 terraform plan
 terraform apply
-## Getting Started
 
 
